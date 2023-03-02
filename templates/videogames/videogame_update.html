@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Editar {{ videogame.title }} - pyGAMEcol{% endblock title %}
+{% block navbar %}
+<nav class="navbar-nav">
+    <form class="form-inline" action="{% url 'logout' %}">
+        <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-user-xmark"></i> Cerrar sesión</button>
+    </form>
+</nav>
+{% endblock navbar %}
+{% block subnavbar %}
+<nav class="navbar navbar-nav fixed-bottom navbar-dark bg-secondary" style="margin-top: 65px ;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            Editar <strong>{{ videogame.title }}</strong>
+        </a>
+        <nav class="navbar-nav">
+            <a href="{% url 'collection' %}" class="btn btn-success"><i class="fa-solid fa-house"></i> Colección</a>
+        </nav>
+    </div>
+</nav>
+{% endblock subnavbar %}
+{% block body %}
+<form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100" style="margin-top: 25px;">
+                <div class="col-8">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-md-2 mt-md-1">
+                                <h2 class="fw-bold mb-2 text-uppercase">Editar videjuego</h2>
+                                <p class="text-white-50 mb-4">Modifica los datos del videojuego</p>
+                                <div class="form-outline form-white mb-4">
+                                    {% if form.title.errors %}
+                                        {% for error in form.title.errors %}
+                                            <p class="small text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ form.title }}
+                                    <label class="form-label" for="title">Título</label>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-outline form-white mb-4">
+                                            {% if form.platform.errors %}
+                                                {% for error in form.platform.errors %}
+                                                    <p class="small text-danger">{{ error }}</p>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {{ form.platform }}
+                                            <label class="form-label" for="platform">Plataforma</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-outline form-white mb-4">
+                                            {% if form.formato.errors %}
+                                                {% for error in form.formato.errors %}
+                                                    <p class="small text-danger">{{ error }}</p>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {{ form.formato }}
+                                            <label class="form-label" for="formato">Formato</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-outline form-white mb-4">
+                                    {% if form.release_date.errors %}
+                                        {% for error in form.release_date.errors %}
+                                            <p class="small text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ form.release_date }}
+                                    <label class="form-label" for="release_date"><em>Fecha de lanzamiento</em></label>
+                                </div>
+                                <div class="form-outline form-white mb-4">
+                                    {% if form.front_cover.errors %}
+                                        {% for error in form.front_cover.errors %}
+                                            <p class="small text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <p class="small m-0">Actualmente: <a href="{{ videogame.front_cover.url }}" target="_blank">{{ videogame.front_cover.url }}</a></p>
+                                    {{ form.front_cover }}
+                                    <label class="form-label" for="front_cover"><em>Carátula</em></label>
+                                </div>
+                                <div class="form-outline form-white mb-2">
+                                    {% if form.description.errors %}
+                                        {% for error in form.description.errors %}
+                                            <p class="small text-danger">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ form.description }}
+                                    <label class="form-label" for="description"><em>Descripción</em></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button class="btn btn-outline-primary btn-lg px-5" type="submit" value="save"><i class="fa-solid fa-plus"></i> Actualizar</button>
+                        </div>
+                    </div>
+                </div>
+                {% with ''|center:3 as range %}
+                {% for _ in range %}
+                    <div> </div>
+                {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+    </section>
+</form>
+{% endblock body %}

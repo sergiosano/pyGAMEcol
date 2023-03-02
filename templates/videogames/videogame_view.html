@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}{{ videogame.title }} - pyGAMEcol{% endblock title %}
+{% block navbar %}
+<nav class="navbar-nav">
+    <form class="form-inline" action="{% url 'logout' %}">
+        <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-user-xmark"></i> Cerrar sesión</button>
+    </form>
+</nav>
+{% endblock navbar %}
+{% block subnavbar %}
+<nav class="navbar navbar-expand fixed-bottom navbar-dark bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'collection' %}">
+            Visualizar videojuego
+        </a>
+        <nav class="navbar-nav mx-auto">
+            <strong>{{ videogame.title }} </strong> lleva en tu colección desde el {{ videogame.created_at }}
+        </nav>
+        <nav class="navbar-nav">
+            <a href="{% url 'collection' %}" class="btn btn-success"><i class="fa-solid fa-house"></i> Colección</a>
+        </nav>
+    </div>
+</nav>
+{% endblock subnavbar %}
+{% block body %}
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100" style="margin-top: 25px;">
+            <div class="col">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-4 text-left">
+                        <div class="mb-md-4 mt-md-1">
+                            <h2 class="fw-bold mb-2 text-uppercase text-center">{{ videogame.title }}</h2>
+                            <p class="text-white-50 mb-4 text-center fs-5"><img class="img-fluid mx-auto" src="{{ videogame.platform.icon.url }}" style="height: 32px; width: 32px;"> {{ videogame.platform }}</p>
+                            <div class="row d-flex justify-content-center align-items-center h-100">
+                                <div class="card"style="width: 80rem;">
+                                    <img src="{{ videogame.front_cover.url }}" class="card-img-top mx-auto rounded mt-1" style="height: 300px; width: 200px;">
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><strong>Título: </strong>{{ videogame.title }}</li>
+                                            <li class="list-group-item"><strong>Plataforma: </strong>{{ videogame.platform }}</li>
+                                            <li class="list-group-item"><strong>Formato: </strong>{{ videogame.formato }}</li>
+                                            {% if videogame.release_date %}
+                                                <li class="list-group-item"><strong>Fecha de lanzamiento: </strong>{{ videogame.release_date }}</li>
+                                            {% else %}
+                                                <li class="list-group-item"><strong>Fecha de lanzamiento: </strong></li>
+                                            {% endif %}
+                                            <li class="list-group-item"><strong>Descripción: </strong>{{ videogame.description }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'videogame_update' videogame.slug %}" class="btn btn-outline-secondary btn-lg px-5"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                        <a href="{% url 'videogame_delete' videogame.slug %}" class="btn btn-outline-danger btn-lg px-5"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                    </div>
+                </div>
+            </div>
+            {% with ''|center:4 as range %}
+            {% for _ in range %}
+                <div> </div>
+            {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+</section>
+{% endblock body %}

@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% block title %}Iniciar sesión - pyGAMEcol{% endblock title %}
+{% block navbar %}
+<nav class="navbar-nav">
+    <form class="form-inline" action="{% url 'register' %}">
+        <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-address-card"></i> Registro</button>
+    </form>
+</nav>
+{% endblock navbar %}
+{% block body %}
+<form method="post" autocomplete="off"> {% csrf_token %}
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <div class="mb-md-4 mt-md-1 pb-2">
+                                <h2 class="fw-bold mb-2 text-uppercase">Iniciar sesión</h2>
+                                <p class="text-white-50 mb-5">Introduce tu usuario y contraseña</p>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                                            {{message}}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <div class="form-outline form-white mb-4">
+                                    <input type="text" name="username" class="form-control form-control-lg" />
+                                    <label class="form-label" for="username">Usuario</label>
+                                </div>
+                                <div class="form-outline form-white mb-4">
+                                    <input type="password" name="password" class="form-control form-control-lg" />
+                                    <label class="form-label" for="password">Contraseña</label>
+                                </div>
+                                <button class="btn btn-outline-success btn-lg px-5" type="submit"><i class="fa-solid fa-user"></i> Iniciar sesión</button>
+                            </div>
+                            <div>
+                                <p class="mb-0">¿No dispones de una cuenta? <a href="{% url 'register' %}"><button type="button" class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-address-card"></i> Registro</button></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+{% endblock body %}
